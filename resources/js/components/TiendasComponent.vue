@@ -54,9 +54,20 @@
         },
 
         methods: {
+            async getTiendas() {
+                let me = this;
+                await axios.get('/getTiendas')
+                .then(function (response) {
+                    console.log(response.data);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+             }
         },
         
         async mounted() {
+            await this.getTiendas();
         }
     }
 </script>

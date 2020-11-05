@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('comun/contenido');
 });
+
+Route::get('/getTiendas', 'TiendasController@getTiendas');
