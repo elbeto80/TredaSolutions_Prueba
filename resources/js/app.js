@@ -8,7 +8,9 @@ Vue.use(VueRouter)
 
 const routes = [
     { path: '*', component:()=> import('./components/NotFound.vue') },
-    { path: '/', component:()=> import('./components/HomeComponent.vue') }
+    { path: '/', component:()=> import('./components/HomeComponent.vue') },
+    { path: '/tiendas', component:()=> import('./components/TiendasComponent.vue') },
+    { path: '/productos', component:()=> import('./components/ProductosComponent.vue') },
 ]
 
 const router = new VueRouter({    
