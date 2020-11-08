@@ -52,7 +52,7 @@
                                 <th scope="col">Valor</th>
                                 <th scope="col">Tienda</th>
                                 <th scope="col">Imagen</th>
-                                <th scope="col">Ppciones</th>
+                                <th scope="col">Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>

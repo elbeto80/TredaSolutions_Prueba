@@ -59,7 +59,7 @@
                                         <td v-text="tienda.nombre"></td>
                                         <td v-text="formato_fecha_corta(tienda.fecha_apertura)"></td>
                                         <td>
-                                            <button class="btn btn-success btn-xs" title="Ver productos de tienda">
+                                            <button class="btn btn-success btn-xs" title="Ver productos de tienda" @click="verProductosTienda(tienda)" data-toggle="modal" data-target="#modalVerProductos">
                                                 <i class="nav-icon fas fa-shopping-basket"></i>
                                             </button>
                                         </td>
@@ -87,7 +87,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Nueva tienda</h5>
+                        <h5 class="modal-title" id="exampleModalLabel" v-text="(!idTienda ? 'Nueva tienda' : 'Modificar tienda')"></h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" @click="vaciarCampos">
                         <span aria-hidden="true">&times;</span>
                         </button>
@@ -112,6 +112,59 @@
             </div>
         </div>
 
+        <!-- Modal ver productos tienda -->
+        <div class="modal fade" id="modalVerProductos" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel" v-text="tituloVentana"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <thead class="thead-light">
+                                        <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Nombre Producto</th>
+                                        <th scope="col">SKU</th>
+                                        <th scope="col">Descripción</th>
+                                        <th scope="col">Valor</th>
+                                        <th scope="col">Imagen</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-if="listaProductos.length <= 0">
+                                            <td colspan="6"> <h5>No Hay Elementos Para Mostrar</h5> </td>
+                                        </tr>
+                                        <tr v-for="(producto,index) in listaProductos" :key="producto.imagen" v-else>
+                                            <th scope="row" v-text="index+1"></th>
+                                            <td v-text="producto.nombre"></td>
+                                            <td v-text="producto.sku"></td>
+                                            <td v-text="producto.descripcion"></td>
+                                            <td v-text="producto.valor"></td>
+                                            <td>
+                                                <a :href="producto.imagen" target="_blank" title="Ver imagen">
+                                                    <img :src="producto.imagen" width="24">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" @click="guardarTienda">Guardar</button>
+                        <button  id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal" data-backdrop="false" @click="vaciarCampos">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -124,6 +177,8 @@
                 fecha_apertura: '',
                 listaTiendas: [],
                 campoBuscar: '',
+                listaProductos: [],
+                tituloVentana: '',
             }
         },
 
@@ -245,6 +300,26 @@
             limpiarBusqueda() {   // limpia la busqueda en la tabla segun campo
                 this.campoBuscar = '',
                 this.getTiendas();
+            },
+
+            async verProductosTienda(tienda) {
+                this.tituloVentana = 'Productos ' + tienda.nombre;
+                CargandoSweet(0, 'Cargando...');
+                let me = this;
+                await axios.get('/getProductosTienda', {
+                    params: {
+                        idTienda: tienda.id,
+                    }
+                })
+                .then(function (response) {
+                    me.listaProductos = response.data.info.productos;
+                    CargandoSweet(1);
+                })
+                .catch(function (error) {
+                    CargandoSweet(1);
+                    console.log(error);
+                    Success_Error_Mostrar('Error', error, 'error');
+                });
             }
         },
         

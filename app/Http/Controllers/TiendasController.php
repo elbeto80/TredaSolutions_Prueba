@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Modelos\TiendasModel;
+use App\Modelos\ProductosModel;
 use App\Http\Controllers\logsController;
 
 use \Validator;
@@ -13,6 +14,28 @@ use \DB;
 
 class TiendasController extends Controller
 {
+
+    public function getProductosTienda(Request $request) {
+        try {
+            $values = $request->input();
+            
+            $productos = ProductosModel::where('tienda',$values['idTienda'])->get()->toArray();
+
+            $response = [
+                'productos'=> $productos
+            ];
+
+            // // Registro del logs
+            $log = new logsController();
+            $respLog = $log->logsFuntion('Consulta productos de tienda id ' . $values['idTienda']);
+
+            return ['error' => 0, 'info' => $response];
+        } catch(Exception $e) {
+            error_log($e,0);
+            return ['error' => 1,'info'=> (string)$e];
+        }
+    }
+
     public function getTiendas(Request $request) {
         try {
             $values = $request->input();

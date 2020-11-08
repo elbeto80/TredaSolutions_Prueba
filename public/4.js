@@ -134,6 +134,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -141,7 +194,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       nombreTienda: '',
       fecha_apertura: '',
       listaTiendas: [],
-      campoBuscar: ''
+      campoBuscar: '',
+      listaProductos: [],
+      tituloVentana: ''
     };
   },
   methods: {
@@ -311,25 +366,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     limpiarBusqueda: function limpiarBusqueda() {
       // limpia la busqueda en la tabla segun campo
       this.campoBuscar = '', this.getTiendas();
+    },
+    verProductosTienda: function verProductosTienda(tienda) {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var me;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                _this4.tituloVentana = 'Productos ' + tienda.nombre;
+                CargandoSweet(0, 'Cargando...');
+                me = _this4;
+                _context4.next = 5;
+                return axios.get('/getProductosTienda', {
+                  params: {
+                    idTienda: tienda.id
+                  }
+                }).then(function (response) {
+                  me.listaProductos = response.data.info.productos;
+                  CargandoSweet(1);
+                })["catch"](function (error) {
+                  CargandoSweet(1);
+                  console.log(error);
+                  Success_Error_Mostrar('Error', error, 'error');
+                });
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
+      }))();
     }
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
 
-    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
-          switch (_context4.prev = _context4.next) {
+          switch (_context5.prev = _context5.next) {
             case 0:
-              _context4.next = 2;
-              return _this4.getTiendas();
+              _context5.next = 2;
+              return _this5.getTiendas();
 
             case 2:
             case "end":
-              return _context4.stop();
+              return _context5.stop();
           }
         }
-      }, _callee4);
+      }, _callee5);
     }))();
   }
 });
@@ -470,7 +559,30 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
-                            _vm._m(5, true),
+                            _c("td", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-success btn-xs",
+                                  attrs: {
+                                    title: "Ver productos de tienda",
+                                    "data-toggle": "modal",
+                                    "data-target": "#modalVerProductos"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.verProductosTienda(tienda)
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass:
+                                      "nav-icon fas fa-shopping-basket"
+                                  })
+                                ]
+                              )
+                            ]),
                             _vm._v(" "),
                             _c("td", [
                               _c(
@@ -546,14 +658,15 @@ var render = function() {
           [
             _c("div", { staticClass: "modal-content" }, [
               _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "exampleModalLabel" }
-                  },
-                  [_vm._v("Nueva tienda")]
-                ),
+                _c("h5", {
+                  staticClass: "modal-title",
+                  attrs: { id: "exampleModalLabel" },
+                  domProps: {
+                    textContent: _vm._s(
+                      !_vm.idTienda ? "Nueva tienda" : "Modificar tienda"
+                    )
+                  }
+                }),
                 _vm._v(" "),
                 _c(
                   "button",
@@ -672,6 +785,143 @@ var render = function() {
           ]
         )
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modalVerProductos",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "myLargeModalLabel",
+          "aria-hidden": "true",
+          "data-backdrop": "static",
+          "data-keyboard": "false"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c("h5", {
+                  staticClass: "modal-title",
+                  attrs: { id: "exampleModalLabel" },
+                  domProps: { textContent: _vm._s(_vm.tituloVentana) }
+                }),
+                _vm._v(" "),
+                _vm._m(5)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("table", { staticClass: "table table-bordered" }, [
+                      _vm._m(6),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        [
+                          _vm.listaProductos.length <= 0
+                            ? _c("tr", [_vm._m(7)])
+                            : _vm._l(_vm.listaProductos, function(
+                                producto,
+                                index
+                              ) {
+                                return _c("tr", { key: producto.imagen }, [
+                                  _c("th", {
+                                    attrs: { scope: "row" },
+                                    domProps: { textContent: _vm._s(index + 1) }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("td", {
+                                    domProps: {
+                                      textContent: _vm._s(producto.nombre)
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("td", {
+                                    domProps: {
+                                      textContent: _vm._s(producto.sku)
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("td", {
+                                    domProps: {
+                                      textContent: _vm._s(producto.descripcion)
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("td", {
+                                    domProps: {
+                                      textContent: _vm._s(producto.valor)
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href: producto.imagen,
+                                          target: "_blank",
+                                          title: "Ver imagen"
+                                        }
+                                      },
+                                      [
+                                        _c("img", {
+                                          attrs: {
+                                            src: producto.imagen,
+                                            width: "24"
+                                          }
+                                        })
+                                      ]
+                                    )
+                                  ])
+                                ])
+                              })
+                        ],
+                        2
+                      )
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.guardarTienda }
+                  },
+                  [_vm._v("Guardar")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: {
+                      id: "closeModal",
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "data-backdrop": "false"
+                    },
+                    on: { click: _vm.vaciarCampos }
+                  },
+                  [_vm._v("Cerrar")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
     )
   ])
 }
@@ -739,15 +989,45 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success btn-xs",
-          attrs: { title: "Ver productos de tienda" }
-        },
-        [_c("i", { staticClass: "nav-icon fas fa-shopping-basket" })]
-      )
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-light" }, [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre Producto")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("SKU")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Descripción")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Valor")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Imagen")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "6" } }, [
+      _c("h5", [_vm._v("No Hay Elementos Para Mostrar")])
     ])
   }
 ]
