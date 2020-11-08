@@ -43,15 +43,16 @@
                             <table class="table table-bordered">
                                 <thead class="thead-light">
                                     <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nombre tienda</th>
-                                    <th scope="col">Fecha apertura</th>
-                                    <th scope="col">Productos</th>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Nombre tienda</th>
+                                        <th scope="col">Fecha apertura</th>
+                                        <th scope="col">Productos</th>
+                                        <th scope="col">Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-if="listaTiendas.length <= 0">
-                                        <td colspan="4"> <h5 class="padding_07em">No Hay Elementos Para Mostrar</h5> </td>
+                                        <td colspan="5"> <h5>No Hay Elementos Para Mostrar</h5> </td>
                                     </tr>
                                     <tr v-for="(tienda,index) in listaTiendas" :key="tienda.id" v-else>
                                         <th scope="row" v-text="index+1"></th>
@@ -61,6 +62,8 @@
                                             <button class="btn btn-success btn-xs" title="Ver productos de tienda">
                                                 <i class="nav-icon fas fa-shopping-basket"></i>
                                             </button>
+                                        </td>
+                                        <td>
                                             <button class="btn btn-warning btn-xs" title="Editar tienda" @click="editarTienda(tienda)" data-toggle="modal" data-target="#modalNuevaTienda">
                                                 <i class="nav-icon fas fa-pencil-alt"></i>
                                             </button>
@@ -68,6 +71,7 @@
                                                 <i class="nav-icon far fa-trash-alt"></i>
                                             </button>
                                         </td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
@@ -78,7 +82,7 @@
             </div>
         </section>
 
-        <!-- Modal -->
+        <!-- Modal registro tienda -->
         <div class="modal fade" id="modalNuevaTienda" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -144,7 +148,7 @@
             },
 
             async guardarTienda() {
-                // if( !this.validarCampos() ) { return false; }
+                if( !this.validarCampos() ) { return false; }
                 let me = this;
                 CargandoSweet(0, 'Guardando...');
                 await axios.post('/tiendas/save', {

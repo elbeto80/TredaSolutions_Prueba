@@ -4,6 +4,7 @@ mix.styles([
     'resources/plantilla/css/all.min.css',
     'resources/plantilla/css/ionicons.min.css',
     'resources/plantilla/css/adminlte.min.css',
+    'resources/plantilla/css/style.css',
  ], 'public/css/plantilla.css').
  scripts([
     'resources/plantilla/js/jquery.min.js',

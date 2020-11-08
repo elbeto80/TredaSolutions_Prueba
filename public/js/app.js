@@ -52740,22 +52740,22 @@ vue__WEBPACK_IMPORTED_MODULE_1___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 var routes = [{
   path: '*',
   component: function component() {
-    return __webpack_require__.e(/*! import() */ 2).then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
+    return __webpack_require__.e(/*! import() */ 1).then(__webpack_require__.bind(null, /*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue"));
   }
 }, {
   path: '/',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./components/HomeComponent.vue */ "./resources/js/components/HomeComponent.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ./components/HomeComponent.vue */ "./resources/js/components/HomeComponent.vue"));
   }
 }, {
   path: '/tiendas',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/TiendasComponent.vue */ "./resources/js/components/TiendasComponent.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/TiendasComponent.vue */ "./resources/js/components/TiendasComponent.vue"));
   }
 }, {
   path: '/productos',
   component: function component() {
-    return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./components/ProductosComponent.vue */ "./resources/js/components/ProductosComponent.vue"));
+    return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, /*! ./components/ProductosComponent.vue */ "./resources/js/components/ProductosComponent.vue"));
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__["default"]({

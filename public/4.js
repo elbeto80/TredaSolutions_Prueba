@@ -130,6 +130,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -183,10 +187,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                // if( !this.validarCampos() ) { return false; }
+                if (_this2.validarCampos()) {
+                  _context2.next = 2;
+                  break;
+                }
+
+                return _context2.abrupt("return", false);
+
+              case 2:
                 me = _this2;
                 CargandoSweet(0, 'Guardando...');
-                _context2.next = 4;
+                _context2.next = 6;
                 return axios.post('/tiendas/save', {
                   idTienda: me.idTienda,
                   nombreTienda: me.nombreTienda.trim(),
@@ -209,7 +220,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   Success_Error_Mostrar('Error', error, 'error');
                 });
 
-              case 4:
+              case 6:
               case "end":
                 return _context2.stop();
             }
@@ -459,9 +470,9 @@ var render = function() {
                               }
                             }),
                             _vm._v(" "),
+                            _vm._m(5, true),
+                            _vm._v(" "),
                             _c("td", [
-                              _vm._m(5, true),
-                              _vm._v(" "),
                               _c(
                                 "button",
                                 {
@@ -710,7 +721,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Fecha apertura")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Productos")])
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Productos")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Opciones")])
       ])
     ])
   },
@@ -718,24 +731,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "4" } }, [
-      _c("h5", { staticClass: "padding_07em" }, [
-        _vm._v("No Hay Elementos Para Mostrar")
-      ])
+    return _c("td", { attrs: { colspan: "5" } }, [
+      _c("h5", [_vm._v("No Hay Elementos Para Mostrar")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "btn btn-success btn-xs",
-        attrs: { title: "Ver productos de tienda" }
-      },
-      [_c("i", { staticClass: "nav-icon fas fa-shopping-basket" })]
-    )
+    return _c("td", [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success btn-xs",
+          attrs: { title: "Ver productos de tienda" }
+        },
+        [_c("i", { staticClass: "nav-icon fas fa-shopping-basket" })]
+      )
+    ])
   }
 ]
 render._withStripped = true
