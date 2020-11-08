@@ -7,8 +7,13 @@ mix.styles([
  ], 'public/css/plantilla.css').
  scripts([
     'resources/plantilla/js/jquery.min.js',
-    'resources/plantilla/js/bootstrap.bundle.min.js',
+    // 'resources/plantilla/js/bootstrap.bundle.min.js',
+    'resources/plantilla/js/moment.min.js',
+   'resources/plantilla/js/es.js',
     'resources/plantilla/js/adminlte.min.js',
     'resources/plantilla/js/demo.js',
+    'resources/plantilla/js/sweetalert.min.js',
+    'resources/plantilla/js/main.js',
  ], 'public/js/plantilla.js').
- js(['resources/js/app.js'], 'public/js/app.js');
+ js(['resources/js/app.js'], 'public/js/app.js').
+ version();
