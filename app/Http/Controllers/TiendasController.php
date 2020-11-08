@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Modelos\TiendasModel;
+use App\Http\Controllers\logsController;
 
 use \Validator;
 use \Exception;
@@ -31,6 +32,10 @@ class TiendasController extends Controller
             $response = [
                 'tiendas'=> $tiendas
             ];
+
+            // Registro del logs
+            $log = new logsController();
+            $respLog = $log->logsFuntion('Consulta de tiendas');
 
             return ['error' => 0, 'info' => $response];
         } catch(Exception $e) {
@@ -62,16 +67,22 @@ class TiendasController extends Controller
             // SI TRAE idTienda MODIFICA SINO CREA NUEVO
             if( !$values['idTienda'] ){
                 $tienda = new TiendasModel();
+                $infoLog = 'Guardada nueva tienda ';
             } else {
                 $tienda = TiendasModel::findOrFail($values['idTienda']);
+                $infoLog = 'Editada tienda ';
             }
             $tienda->nombre         = $values['nombreTienda'];
             $tienda->fecha_apertura = $values['fecha_apertura'];
 
             if(!$tienda->save()){
                 DB::rollback();
-                return ['error' => 1, 'info'   => 'No ha sido posible Guardar tienda.'];
+                return ['error' => 1, 'info' => 'No ha sido posible Guardar tienda.'];
             }
+
+            // Registro del logs
+            $log = new logsController();
+            $respLog = $log->logsFuntion($infoLog . '(' . $values['nombreTienda'] . ' ID ' . $tienda->id . ')');
 
             return ['error' => 0,'info'   => 'Tienda guardada correctamente'];
         } catch(Exception $e) {
@@ -87,6 +98,11 @@ class TiendasController extends Controller
                 DB::rollback();
                 return ['error' => 1, 'info' => 'No ha sido posible eliminar tienda.'];
             }
+
+            // Registro del logs
+            $log = new logsController();
+            $respLog = $log->logsFuntion('Eliminada tienda (' . $tienda->nombre . ' ID ' . $tienda->id . ')');
+
             return ['error' => 0, 'info' => 'Tienda borrada correctamente'];
         } catch(Exception $e) {
             error_log($e,0);
