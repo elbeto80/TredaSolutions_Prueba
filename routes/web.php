@@ -7,3 +7,5 @@ Route::get('/', function () {
 Route::get('/getTiendas', 'TiendasController@getTiendas');
 Route::post('/tiendas/save', 'TiendasController@guardarTienda');
 Route::post('/tiendas/delete', 'TiendasController@eliminarTienda');
+
+Route::get('/getParametrosHome', 'HomeController@getParametrosHome');

@@ -24,13 +24,13 @@
                         <div class="col-lg-3 col-6">
                             <div class="small-box bg-success">
                                 <div class="inner">
-                                    <h3>usuarios</h3>
-                                    <p>Usuarios</p>
+                                    <h3 v-text="totalTiendas"></h3>
+                                    <h4>Tiendas</h4>
                                 </div>
                                 <div class="icon">
-                                    <i class="fas fa-user-plus"></i>
+                                    <i class="fas fa-store"></i>
                                 </div>
-                                <router-link to="/administracion/usuarios" class="small-box-footer">
+                                <router-link to="/tiendas" class="small-box-footer">
                                     Ver más <i class="fas fa-arrow-circle-right"></i>
                                 </router-link>
                             </div>
@@ -39,13 +39,13 @@
                         <div class="col-lg-3 col-6">
                             <div class="small-box bg-info">
                                 <div class="inner">
-                                    <h3>prestamos</h3>
-                                    <p>Total Prestamos</p>
+                                    <h3 v-text="totalProductos"></h3>
+                                    <h4>Productos</h4>
                                 </div>
                                 <div class="icon">
-                                    <i class="fas fa-book"></i>
+                                    <i class="fas fa-shopping-basket"></i>
                                 </div>
-                                <router-link to="/prestamos/prestamos" class="small-box-footer">
+                                <router-link to="/productos" class="small-box-footer">
                                     Ver más <i class="fas fa-arrow-circle-right"></i>
                                 </router-link>
                             </div>
@@ -61,10 +61,31 @@
     export default {
         data() {
             return {
+                totalTiendas: 0,
+                totalProductos: 0,
             }
         },
 
         methods: {
+            async getParametrosHome() {
+                CargandoSweet(0, 'Cargando...');
+                let me = this;
+                await axios.get('/getParametrosHome')
+                .then(function (response) {
+                    me.totalTiendas = response.data.info.tiendas;
+                    me.totalProductos = response.data.info.productos;
+                    CargandoSweet(1);
+                })
+                .catch(function (error) {
+                    CargandoSweet(1);
+                    console.log(error);
+                    Success_Error_Mostrar('Error', error, 'error');
+                });
+            },
+        },
+
+        async mounted() {
+            await this.getParametrosHome();
         }
     }
 </script>
