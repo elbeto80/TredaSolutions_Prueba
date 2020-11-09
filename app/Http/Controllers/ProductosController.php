@@ -40,7 +40,7 @@ class ProductosController extends Controller
             $PR = $producto->getTable();
             $TI = $tienda->getTable();
 
-            $productos = $producto->select("$PR.id","$PR.nombre", "$PR.sku", "$PR.descripcion", "$PR.valor", "$PR.tienda", "$PR.imagen", "$TI.nombre as nombretienda")
+            $productos = $producto->select("$PR.id","$PR.nombre", "$PR.sku", "$PR.descripcion", "$PR.valor", "$PR.tienda", "$PR.imagen", "$TI.nombre as nombretienda", "$PR.imagenbi", "$PR.tipo")
             ->join("$TI", "$PR.tienda", "$TI.id")
             ->where(function($query) use ($values, $PR) {
                 if(!empty($values['campoBuscar'])) {
@@ -49,6 +49,10 @@ class ProductosController extends Controller
             })
             ->orderBy("$PR.nombre")
             ->get();
+
+            foreach ($productos as $key => $info) {
+                $productos[$key]['imagenbi'] = base64_encode($info['imagenbi']);
+            }
 
             $response = [
                 'productos'=> $productos
@@ -106,6 +110,12 @@ class ProductosController extends Controller
 
             $ruta = '';
             if( $_FILES ){
+                $tipoArchivo   = $_FILES['file']['type'];
+                $nombreArchivo = $_FILES['file']['name'];
+                $tamanoArchivo = $_FILES['file']['size'];
+                $imagenCargada = fopen($_FILES["file"]["tmp_name"],'r');
+                $binarios      = fread($imagenCargada, $tamanoArchivo);
+
                 $extension = explode(".", $_FILES["file"]["name"]);
                 $extension = end( $extension );
                 if ( $extension == 'jpg' || $extension == 'jpeg' || $extension == 'png' || $extension == 'gif' || $extension == 'bmp' ) {
@@ -137,6 +147,10 @@ class ProductosController extends Controller
             $producto->valor       = $values['valor'];
             $producto->tienda      = $values['tienda'];
             $producto->sku         = $values['sku'];
+            if( $_FILES ){
+                $producto->imagenbi = $binarios;
+                $producto->tipo     = $tipoArchivo;
+            }
             $producto->imagen      = ($ruta ? $ruta : $producto['imagen']);
 
             if(!$producto->save()){

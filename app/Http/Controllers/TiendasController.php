@@ -21,6 +21,10 @@ class TiendasController extends Controller
             
             $productos = ProductosModel::where('tienda',$values['idTienda'])->get()->toArray();
 
+            foreach ($productos as $key => $info) {
+                $productos[$key]['imagenbi'] = base64_encode($info['imagenbi']);
+            }
+
             $response = [
                 'productos'=> $productos
             ];
